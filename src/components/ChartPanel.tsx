@@ -8,7 +8,7 @@ import {
 } from 'react';
 import type { CandleData, VolumeData } from '@/types';
 import type { ChartHandle, ChartMarker } from '@/hooks/useReplay';
-import type { IChartApi, ISeriesApi, IPriceLine } from 'lightweight-charts';
+import type { IChartApi, ISeriesApi, IPriceLine, CandlestickData, HistogramData, UTCTimestamp } from 'lightweight-charts';
 import styles from './ChartPanel.module.css';
 
 const ChartPanel = forwardRef<ChartHandle>(function ChartPanel(_props, ref) {
@@ -126,15 +126,15 @@ const ChartPanel = forwardRef<ChartHandle>(function ChartPanel(_props, ref) {
   useImperativeHandle(ref, () => ({
     updateCandle(c: CandleData) {
       lastCloseRef.current = c.close;
-      candleRef.current?.update(c);
+      candleRef.current?.update(c as unknown as CandlestickData<UTCTimestamp>);
     },
     updateVolume(v: VolumeData) {
-      volumeRef.current?.update(v);
+      volumeRef.current?.update(v as unknown as HistogramData<UTCTimestamp>);
     },
     setData(candles: CandleData[], volumes: VolumeData[]) {
       if (candles.length) lastCloseRef.current = candles[candles.length - 1].close;
-      candleRef.current?.setData(candles);
-      volumeRef.current?.setData(volumes);
+      candleRef.current?.setData(candles as unknown as CandlestickData<UTCTimestamp>[]);
+      volumeRef.current?.setData(volumes as unknown as HistogramData<UTCTimestamp>[]);
     },
     clear() {
       candleRef.current?.setData([]);

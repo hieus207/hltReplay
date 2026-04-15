@@ -72,8 +72,8 @@ export default function Controls({
         </span>
 
         <div className={styles.progBar} onClick={handleBarClick}>
-          <div className={styles.progFill} ref={progFillRef} />
-          <div className={styles.progHead} ref={progHeadRef} />
+          <div className={styles.progFill} ref={progFillRef as React.RefObject<HTMLDivElement>} />
+          <div className={styles.progHead} ref={progHeadRef as React.RefObject<HTMLDivElement>} />
           {markers?.map((m, i) => (
             <div
               key={i}
@@ -175,7 +175,7 @@ export default function Controls({
           </div>
         </div>
 
-        <span className={styles.currentTime} ref={timeDisplayRef} />
+        <span className={styles.currentTime} ref={timeDisplayRef as React.RefObject<HTMLSpanElement>} />
 
         <span className={`${styles.statusPill} ${styles[`status_${status}`]}`}>
           {STATUS_LABELS[status]}
