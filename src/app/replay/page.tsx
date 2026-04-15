@@ -128,13 +128,20 @@ function ReplayInner() {
     return out;
   }, [replayRange, annMs, listingMs]);
 
-  // Build suggested Binance download URL from URL params
-  const suggestedURL = urlSymbol && urlStart
-    ? (() => {
-        const date = urlStart.slice(0, 10); // YYYY-MM-DD
-        const sym  = urlSymbol.toUpperCase() + 'USDT';
-        return `https://data.binance.vision/data/spot/daily/aggTrades/${sym}/${sym}-aggTrades-${date}.zip`;
-      })()
+  // Build suggested download URLs from listing info (ann date + symbol)
+  const annDate    = urlAnn ? urlAnn.split(' ')[0] : (urlStart ? urlStart.slice(0, 10) : '');
+  const annSymFull = urlSymbol
+    ? (urlSymbol.toUpperCase().endsWith('USDT') ? urlSymbol.toUpperCase() : urlSymbol.toUpperCase() + 'USDT')
+    : '';
+
+  const suggestedSpotBin = annSymFull && annDate
+    ? `https://data.binance.vision/data/spot/daily/aggTrades/${annSymFull}/${annSymFull}-aggTrades-${annDate}.zip`
+    : null;
+  const suggestedFutBin = annSymFull && annDate
+    ? `https://data.binance.vision/data/futures/um/daily/aggTrades/${annSymFull}/${annSymFull}-aggTrades-${annDate}.zip`
+    : null;
+  const suggestedBybit = annSymFull && annDate
+    ? `https://public.bybit.com/trading/${annSymFull}/${annSymFull}${annDate}.csv.gz`
     : null;
 
   const exchangeLabel: Record<string, string> = { upbit: 'Upbit', bithumb: 'Bithumb' };
@@ -172,15 +179,27 @@ function ReplayInner() {
           <span className={rStyles.bannerItem}>
             🚀 Listing: <strong>{urlListing || '—'}</strong>
           </span>
-          {suggestedURL && !tradeFile && (
+          {(suggestedSpotBin || suggestedFutBin || suggestedBybit) && (
             <>
               <span className={rStyles.bannerSep}>·</span>
-              <button
-                className={rStyles.autoFetchBtn}
-                onClick={() => fetchURL(suggestedURL)}
-              >
-                ⬇ Auto-fetch {urlSymbol}USDT data
-              </button>
+              {suggestedSpotBin && (
+                <button className={`${rStyles.autoFetchBtn} ${rStyles.fetchBinSpot}`}
+                  onClick={() => fetchURL(suggestedSpotBin)}>
+                  ⬇ Spot Bin
+                </button>
+              )}
+              {suggestedFutBin && (
+                <button className={`${rStyles.autoFetchBtn} ${rStyles.fetchBinFut}`}
+                  onClick={() => fetchURL(suggestedFutBin)}>
+                  ⬇ Futures Bin
+                </button>
+              )}
+              {suggestedBybit && (
+                <button className={`${rStyles.autoFetchBtn} ${rStyles.fetchBybit}`}
+                  onClick={() => fetchURL(suggestedBybit)}>
+                  ⬇ Bybit
+                </button>
+              )}
             </>
           )}
         </div>
@@ -203,6 +222,8 @@ function ReplayInner() {
           onSetIntervalMs={setIntervalMs}
           onSetDecimals={handleSetDecimals}
           onStartReplay={handleStartReplay}
+          annDate={annDate}
+          annSymbol={annSymFull}
         />
 
         {/* ── CHART WRAP ── */}

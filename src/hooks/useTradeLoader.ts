@@ -33,7 +33,7 @@ export function useTradeLoader() {
 
   const applyTrades = useCallback(
     async (csvText: string, sourceName: string) => {
-      const { symbol, tradeDay } = detectMeta(sourceName);
+      const { symbol, tradeDay, source } = detectMeta(sourceName);
 
       setLoading({ show: true, text: 'Đang parse trades...', sub: sourceName.slice(-50) });
 
@@ -58,7 +58,7 @@ export function useTradeLoader() {
       const samplePrice = trades[Math.floor(trades.length / 2)].price;
       const autoDecimals = autoDetectDecimals(samplePrice);
 
-      setTradeFile({ symbol, tradeDay, trades, autoDecimals });
+      setTradeFile({ symbol, tradeDay, trades, autoDecimals, source });
       setLoading({ show: false, text: '', sub: '' });
       showToast(`Loaded ${trades.length.toLocaleString('en')} trades ✓`, 'ok');
     },

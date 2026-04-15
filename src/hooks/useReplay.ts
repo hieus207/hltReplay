@@ -349,6 +349,17 @@ export function useReplay(
     s.lastCt = sorted.length ? sorted[sorted.length - 1].time : -Infinity;
     if (sorted.length) updateOHLCV(sorted[sorted.length - 1]);
 
+    // Update order panel price + entry price display after seek
+    // idx points to the next-unprocessed trade, so idx-1 is the last processed trade
+    const lastSeekTrade = idx > s.tIdxStart ? trades[idx - 1] : null;
+    if (lastSeekTrade) {
+      const dec = domRefs.decimals?.current ?? 5;
+      domRefs.orderPanel?.current?.notifyPrice(lastSeekTrade.price, dec, seekTo);
+      if (domRefs.entryPriceEl?.current) {
+        domRefs.entryPriceEl.current.textContent = lastSeekTrade.price.toFixed(dec);
+      }
+    }
+
     s.tIdx  = idx;
     s.vTime = seekTo;
     updateProgress(seekTo, s.startMs, s.endMs);

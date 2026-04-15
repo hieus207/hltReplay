@@ -178,9 +178,14 @@ const OrderPanel = forwardRef<OrderPanelHandle, Props>(({ chartRef, oneWayMode }
         pendingRef.current = pendingRef.current.filter(p => !filled.some(f => f.id === p.id));
         for (const pend of filled) {
           chartRef.current?.removePriceLine(pend.id);
-          _addPosition(pend.side, pend.limitPrice, pend.usdt, pend.placedTime);
+          // Fill at MARKET price (not limit price) — limit = max price willing to pay (long)
+          // or min price willing to sell (short). If market already crossed, fill at market.
+          const fillPrice = pend.side === 'long'
+            ? Math.min(price, pend.limitPrice)   // long: fill at cheaper of market vs limit
+            : Math.max(price, pend.limitPrice);  // short: fill at higher of market vs limit
+          _addPosition(pend.side, fillPrice, pend.usdt, pend.placedTime);
           setOrderLog(l => [{ id: _nextId++, orderId: pend.id, side: pend.side, type: 'Limit',
-            status: 'Filled', price: pend.limitPrice, usdt: pend.usdt, time: replayTimeRef.current }, ...l]);
+            status: 'Filled', price: fillPrice, usdt: pend.usdt, time: replayTimeRef.current }, ...l]);
         }
         forceRender();
       }

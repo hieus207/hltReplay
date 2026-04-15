@@ -34,4 +34,5 @@ export interface TradeFile {
   tradeDay: string;
   trades: Trade[];
   autoDecimals: number;
+  source: 'binance' | 'bybit' | 'unknown';
 }

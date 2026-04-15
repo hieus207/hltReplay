@@ -1,6 +1,6 @@
 'use client';
 
-import { useRef, useState, useCallback } from 'react';
+import { useRef, useState, useCallback, useEffect } from 'react';
 import type { MarketType, TradeFile } from '@/types';
 import { todayStr } from '@/lib/format';
 import styles from './Sidebar.module.css';
@@ -19,6 +19,8 @@ interface Props {
   onSetIntervalMs: (v: number) => void;
   onSetDecimals: (v: number) => void;
   onStartReplay: () => void;
+  annDate?: string;    // "2026-03-31" — pre-fill URL generators from listing page
+  annSymbol?: string;  // "SKYUSDT"
 }
 
 const INTERVALS = [
@@ -34,6 +36,7 @@ const INTERVALS = [
 export default function Sidebar({
   tradeFile, startDt, endDt, intervalMs, inRangeCount, decimals,
   onLoadFile, onFetchURL, onSetStartDt, onSetEndDt, onSetIntervalMs, onSetDecimals, onStartReplay,
+  annDate, annSymbol,
 }: Props) {
   const fileInputRef = useRef<HTMLInputElement>(null);
   const [dragging, setDragging] = useState(false);
@@ -109,6 +112,22 @@ export default function Sidebar({
     });
   };
 
+  // Auto-fill URL generators when coming from a listing page (ann date + symbol known)
+  useEffect(() => {
+    if (!annSymbol && !annDate) return;
+    const sym  = annSymbol || genSymbol;
+    const date = annDate   || genDate;
+    if (annDate)   { setGenDate(annDate);   setBbDate(annDate); }
+    if (annSymbol) { setGenSymbol(annSymbol); setBbSymbol(annSymbol); }
+    if (sym && date) {
+      const u  = buildURL(sym, date, genType);
+      const bu = buildBybitURL(sym, date);
+      if (u)  { setGenURL(u);  setUrlInput(u); }
+      if (bu) setBbURL(bu);
+    }
+  // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [annDate, annSymbol]);
+
   const onDrop = (e: React.DragEvent) => {
     e.preventDefault();
     setDragging(false);
@@ -146,7 +165,9 @@ export default function Sidebar({
 
         {tradeFile && (
           <div className={styles.loadedBadge}>
-            <div className={styles.lbName}>{tradeFile.symbol} · aggTrades</div>
+            <div className={styles.lbName}>
+              {tradeFile.symbol} · {tradeFile.source === 'bybit' ? 'Bybit Trades' : 'aggTrades'}
+            </div>
             <div className={styles.lbMeta}>
               {tradeFile.tradeDay} — {tradeFile.trades.length.toLocaleString('en')} trades
             </div>

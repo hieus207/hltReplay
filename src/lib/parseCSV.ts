@@ -79,12 +79,15 @@ export async function parseCSVToTrades(
   return result;
 }
 
-export function detectMeta(src: string): { symbol: string; tradeDay: string } {
+export function detectMeta(src: string): { symbol: string; tradeDay: string; source: 'binance' | 'bybit' | 'unknown' } {
   // Binance: BTCUSDT-aggTrades-2026-04-15.zip
   const binanceM = src.match(/([A-Z0-9]+)-aggTrades-(\d{4}-\d{2}-\d{2})/i);
-  if (binanceM) return { symbol: binanceM[1].toUpperCase(), tradeDay: binanceM[2] };
-  // Bybit: BTCUSDT2026-04-15.csv.gz
+  if (binanceM) return { symbol: binanceM[1].toUpperCase(), tradeDay: binanceM[2], source: 'binance' };
+  // Bybit: BTCUSDT2026-04-15.csv.gz  (also matches bybit.com URLs)
   const bybitM = src.match(/([A-Z0-9]+?)(\d{4}-\d{2}-\d{2})/i);
-  if (bybitM) return { symbol: bybitM[1].toUpperCase(), tradeDay: bybitM[2] };
-  return { symbol: 'UNKNOWN', tradeDay: '' };
+  if (bybitM) {
+    const isBybit = src.includes('bybit') || src.endsWith('.csv.gz');
+    return { symbol: bybitM[1].toUpperCase(), tradeDay: bybitM[2], source: isBybit ? 'bybit' : 'unknown' };
+  }
+  return { symbol: 'UNKNOWN', tradeDay: '', source: 'unknown' };
 }
