@@ -99,9 +99,11 @@ export function useTradeLoader() {
       if (!url) { showToast('Nhập URL trước!', 'err'); return; }
       setLoading({ show: true, text: 'Đang tải từ URL...', sub: url.slice(-60) });
       try {
-        // Route all requests through the server-side proxy to avoid CORS
-        const proxyURL = `/api/proxy?url=${encodeURIComponent(url)}`;
-        const res = await fetch(proxyURL);
+        // Bybit has no CORS headers — route through server-side proxy.
+        // Binance data.binance.vision has CORS(*), fetch directly.
+        const isBybit = url.includes('bybit.com');
+        const fetchTarget = isBybit ? `/api/proxy?url=${encodeURIComponent(url)}` : url;
+        const res = await fetch(fetchTarget);
         if (res.status === 404) throw new Error('404_NOT_FOUND');
         if (!res.ok) throw new Error(`HTTP ${res.status}`);
         const buf = await res.arrayBuffer();
