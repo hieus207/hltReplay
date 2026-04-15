@@ -5,7 +5,6 @@ import styles from './TradeFeed.module.css';
 const TradeFeed = forwardRef<HTMLDivElement>((_, ref) => {
   return (
     <div className={styles.wrap}>
-      <div className={styles.header}>MARKET TRADES</div>
       <div className={styles.colHead}>
         <span className={styles.colPrice}>Giá</span>
         <span className={styles.colQty}>Vol</span>

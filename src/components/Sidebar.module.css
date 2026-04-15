@@ -6,6 +6,7 @@
   display: flex;
   flex-direction: column;
   overflow-y: auto;
+  overflow-x: hidden;
   padding: 12px;
   gap: 16px;
   flex-shrink: 0;
@@ -68,6 +69,7 @@
 
 .inp {
   flex: 1;
+  min-width: 0;
   background: var(--bg);
   border: 1px solid var(--border2);
   border-radius: 5px;

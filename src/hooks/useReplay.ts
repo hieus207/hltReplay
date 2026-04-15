@@ -2,6 +2,7 @@
 
 import { useState, useRef, useCallback } from 'react';
 import type { Trade, CandleData, VolumeData, ReplayStatus, OrderPanelHandle } from '@/types';
+export type { OrderPanelHandle } from '@/types';
 import { lowerBound, upperBound } from '@/lib/bsearch';
 import { fmtUTC7 } from '@/lib/format';
 
