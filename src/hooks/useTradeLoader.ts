@@ -99,22 +99,38 @@ export function useTradeLoader() {
       if (!url) { showToast('Nhập URL trước!', 'err'); return; }
       setLoading({ show: true, text: 'Đang tải từ URL...', sub: url.slice(-60) });
       try {
-        const res = await fetch(url);
+        // Route all requests through the server-side proxy to avoid CORS
+        const proxyURL = `/api/proxy?url=${encodeURIComponent(url)}`;
+        const res = await fetch(proxyURL);
         if (res.status === 404) throw new Error('404_NOT_FOUND');
         if (!res.ok) throw new Error(`HTTP ${res.status}`);
         const buf = await res.arrayBuffer();
-        const { default: JSZip } = await import('jszip');
-        const zip = await JSZip.loadAsync(buf);
-        const entry = Object.values(zip.files).find((f) => f.name.endsWith('.csv'));
-        if (!entry) throw new Error('Không có CSV trong zip');
-        setLoading({ show: true, text: 'Đang giải nén...', sub: '' });
-        const csvText = await entry.async('string');
+
+        let csvText: string;
+        if (url.endsWith('.csv.gz')) {
+          // Bybit: decompress gzip with browser native DecompressionStream
+          setLoading({ show: true, text: 'Đang giải nén gzip...', sub: '' });
+          const ds = new DecompressionStream('gzip');
+          const writer = ds.writable.getWriter();
+          writer.write(new Uint8Array(buf));
+          writer.close();
+          const out = await new Response(ds.readable).arrayBuffer();
+          csvText = new TextDecoder().decode(out);
+        } else {
+          // Binance: .zip
+          const { default: JSZip } = await import('jszip');
+          const zip = await JSZip.loadAsync(buf);
+          const entry = Object.values(zip.files).find((f) => f.name.endsWith('.csv'));
+          if (!entry) throw new Error('Không có CSV trong zip');
+          setLoading({ show: true, text: 'Đang giải nén...', sub: '' });
+          csvText = await entry.async('string');
+        }
+
         await applyTrades(csvText, url);
       } catch (e: unknown) {
         setLoading({ show: false, text: '', sub: '' });
         const msg = e instanceof Error ? e.message : String(e);
         if (msg === '404_NOT_FOUND') {
-          // Detect if user tried futures for a likely spot-only symbol
           const isFutures = url.includes('/futures/');
           showToast(
             isFutures
@@ -123,11 +139,7 @@ export function useTradeLoader() {
             'err',
           );
         } else {
-          const isCors = msg.includes('fetch') || msg.includes('CORS') || msg.includes('Failed');
-          showToast(
-            isCors ? 'CORS blocked. Tải file về rồi import trực tiếp nhé!' : 'Lỗi: ' + msg,
-            'err',
-          );
+          showToast('Lỗi: ' + msg, 'err');
         }
       }
     },
