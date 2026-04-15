@@ -21,6 +21,7 @@ interface Props {
   onStartReplay: () => void;
   annDate?: string;    // "2026-03-31" — pre-fill URL generators from listing page
   annSymbol?: string;  // "SKYUSDT"
+  blind?: boolean;     // hide symbol until revealed
 }
 
 const INTERVALS = [
@@ -36,7 +37,7 @@ const INTERVALS = [
 export default function Sidebar({
   tradeFile, startDt, endDt, intervalMs, inRangeCount, decimals,
   onLoadFile, onFetchURL, onSetStartDt, onSetEndDt, onSetIntervalMs, onSetDecimals, onStartReplay,
-  annDate, annSymbol,
+  annDate, annSymbol, blind,
 }: Props) {
   const fileInputRef = useRef<HTMLInputElement>(null);
   const [dragging, setDragging] = useState(false);
@@ -166,7 +167,7 @@ export default function Sidebar({
         {tradeFile && (
           <div className={styles.loadedBadge}>
             <div className={styles.lbName}>
-              {tradeFile.symbol} · {tradeFile.source === 'bybit' ? 'Bybit Trades' : 'aggTrades'}
+              {blind ? '???' : tradeFile.symbol} · {tradeFile.source === 'bybit' ? 'Bybit Trades' : 'aggTrades'}
             </div>
             <div className={styles.lbMeta}>
               {tradeFile.tradeDay} — {tradeFile.trades.length.toLocaleString('en')} trades
@@ -191,7 +192,7 @@ export default function Sidebar({
       </section>
 
       {/* ── URL GENERATOR ── */}
-      <section>
+      {!blind && <section>
         <div className={styles.sLabel}>Tạo URL tải nhanh</div>
         <div className={styles.urlGen}>
           <div className={styles.urlGenTitle}>Tạo link Binance aggTrades</div>
@@ -239,7 +240,7 @@ export default function Sidebar({
           )}
           {bbCopied && <p className={styles.hint} style={{ color: 'var(--green2)' }}>✓ Đã copy!</p>}
         </div>
-      </section>
+      </section>}
 
       {/* ── REPLAY SETTINGS ── */}
       <section>
@@ -305,7 +306,7 @@ export default function Sidebar({
         <section>
           <div className={styles.sLabel}>Thống kê</div>
           <div className={styles.stats}>
-            <div>Symbol: <span className={styles.accent}>{tradeFile.symbol}</span></div>
+            {!blind && <div>Symbol: <span className={styles.accent}>{tradeFile.symbol}</span></div>}
             <div>Ngày: <span>{tradeFile.tradeDay}</span></div>
             <div>Tổng trades: <span>{tradeFile.trades.length.toLocaleString('en')}</span></div>
             <div>In range: <span>{inRangeCount > 0 ? inRangeCount.toLocaleString('en') : '—'}</span></div>

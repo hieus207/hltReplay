@@ -66,6 +66,18 @@
 .chSymbol   { font-size: 14px; font-weight: 700; }
 .chInterval { font-size: 11px; color: var(--muted); }
 
+/* MC / FDV live display in chart header */
+.chMcFdv {
+  display: flex;
+  align-items: center;
+  gap: 4px;
+  margin-left: auto;
+  font-size: 11px;
+}
+.chMcLabel { color: var(--muted); }
+.chMcVal   { font-family: monospace; color: var(--text); min-width: 54px; }
+.chMcSep   { color: var(--border2); padding: 0 2px; }
+
 .chOhlcv {
   display: flex;
   gap: 10px;

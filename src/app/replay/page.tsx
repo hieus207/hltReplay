@@ -6,7 +6,7 @@ import Link from 'next/link';
 import type { ChartHandle, ChartMarker, OrderPanelHandle } from '@/hooks/useReplay';
 import { useTradeLoader } from '@/hooks/useTradeLoader';
 import { useReplay } from '@/hooks/useReplay';
-import { parseUTC7Input, fmtInterval } from '@/lib/format';
+import { parseUTC7Input, fmtInterval, fmtMCap } from '@/lib/format';
 import Sidebar from '@/components/Sidebar';
 import Controls from '@/components/Controls';
 import ChartPanel from '@/components/ChartPanel';
@@ -23,6 +23,10 @@ function ReplayInner() {
   const urlExchange = searchParams.get('exchange') ?? '';
   const urlAnn      = searchParams.get('ann') ?? '';
   const urlListing  = searchParams.get('listing') ?? '';
+  const isBlind     = searchParams.get('blind') === '1';
+
+  const [revealed, setRevealed] = useState(false);
+  const showInfo = !isBlind || revealed;
 
   const chartRef      = useRef<ChartHandle | null>(null);
   const tradeFeedRef  = useRef<HTMLDivElement | null>(null);
@@ -35,6 +39,11 @@ function ReplayInner() {
   const entryPriceRef = useRef<HTMLSpanElement | null>(null);
   const entryQtyRef   = useRef<HTMLInputElement | null>(null);
   const limitPriceRef = useRef<HTMLInputElement | null>(null);
+  // MC / FDV live display
+  const mcRef          = useRef<HTMLSpanElement | null>(null);
+  const fdvRef         = useRef<HTMLSpanElement | null>(null);
+  const circSupplyRef  = useRef<number>(0);
+  const totalSupplyRef = useRef<number>(0);
 
   const [intervalMs, setIntervalMs] = useState(60_000);
   const [decimals, setDecimals] = useState(6);
@@ -81,7 +90,48 @@ function ReplayInner() {
       progFill: progFillRef, progHead: progHeadRef, timeDisplay: timeRef, ohlcvDisplay: ohlcvRef,
       tradeFeed: tradeFeedRef, orderPanel: orderPanelRef, decimals: decimalsRef,
       entryPriceEl: entryPriceRef,
+      mcDisplay: mcRef, fdvDisplay: fdvRef,
+      circSupply: circSupplyRef, totalSupply: totalSupplyRef,
     }, showToast);
+
+  // Fetch circulating & total supply from CoinGecko when symbol changes
+  useEffect(() => {
+    if (!tradeFile?.symbol) { circSupplyRef.current = 0; totalSupplyRef.current = 0; return; }
+    const base = tradeFile.symbol.replace(/USDT$/i, '').replace(/USD$/i, '').toLowerCase();
+    circSupplyRef.current = 0;
+    totalSupplyRef.current = 0;
+    if (mcRef.current)  mcRef.current.textContent  = '…';
+    if (fdvRef.current) fdvRef.current.textContent = '…';
+
+    (async () => {
+      try {
+        const s = await fetch(`https://api.coingecko.com/api/v3/search?query=${base}`);
+        if (!s.ok) throw new Error();
+        const sd = await s.json();
+        // Pick first coin whose symbol matches exactly (e.g. "sky")
+        const coin = (sd.coins as {id:string;symbol:string}[])
+          ?.find(c => c.symbol.toLowerCase() === base);
+        if (!coin) throw new Error('not found');
+        const d = await fetch(
+          `https://api.coingecko.com/api/v3/coins/${coin.id}` +
+          `?localization=false&tickers=false&market_data=true&community_data=false&developer_data=false`
+        );
+        if (!d.ok) throw new Error();
+        const cd = await d.json();
+        const circ  = cd.market_data?.circulating_supply ?? 0;
+        const total = cd.market_data?.total_supply ?? cd.market_data?.max_supply ?? circ;
+        circSupplyRef.current  = circ;
+        totalSupplyRef.current = total;
+        // Init display with first known price if replay already running
+        // (will also be updated on next price tick)
+        if (mcRef.current)  mcRef.current.textContent  = circ  > 0 ? fmtMCap(0) : '—';
+        if (fdvRef.current) fdvRef.current.textContent = total > 0 ? fmtMCap(0) : '—';
+      } catch {
+        if (mcRef.current)  mcRef.current.textContent  = '—';
+        if (fdvRef.current) fdvRef.current.textContent = '—';
+      }
+    })();
+  }, [tradeFile?.symbol]); // eslint-disable-line react-hooks/exhaustive-deps
 
   const handleStartReplay = () => {
     if (!startDt || !endDt) { showToast('Chọn khung giờ trước!', 'err'); return; }
@@ -152,8 +202,9 @@ function ReplayInner() {
       {/* ── TOP BAR ── */}
       <header className={styles.topbar}>
         <Link href="/listings" className={rStyles.backBtn}>← Listings</Link>
+        {isBlind && <span className={rStyles.blindBadge}>🎲 Blind Mode</span>}
         <div className={styles.logo}>⚡ Trade Replay <span>/ Binance aggTrades</span></div>
-        {urlSymbol && (
+        {urlSymbol && showInfo && (
           <div className={rStyles.listingBadge}>
             <span className={`${rStyles.exBadge} ${rStyles[urlExchange]}`}>
               {exchangeLabel[urlExchange] ?? urlExchange}
@@ -161,10 +212,15 @@ function ReplayInner() {
             <span className={rStyles.listingSymbol}>{urlSymbol}</span>
           </div>
         )}
-        {tradeFile && (
+        {tradeFile && showInfo && (
           <div className={styles.tag} style={{ marginLeft: 8 }}>
             {tradeFile.symbol} · {fmtInterval(intervalMs)}
           </div>
+        )}
+        {isBlind && !revealed && (
+          <button className={rStyles.revealBtn} onClick={() => setRevealed(true)} >
+            👁 Reveal
+          </button>
         )}
         <div className={styles.tag} style={{ marginLeft: 'auto' }}>rebuild candles from raw trades</div>
       </header>
@@ -172,31 +228,41 @@ function ReplayInner() {
       {/* ── LISTING INFO BANNER ── */}
       {urlSymbol && (
         <div className={rStyles.banner}>
-          <span className={rStyles.bannerItem}>
-            📢 Ann: <strong>{urlAnn || urlStart?.replace('T', ' ')}</strong>
-          </span>
-          <span className={rStyles.bannerSep}>→</span>
-          <span className={rStyles.bannerItem}>
-            🚀 Listing: <strong>{urlListing || '—'}</strong>
-          </span>
+          {showInfo ? (
+            <>
+              <span className={rStyles.bannerItem}>
+                📢 Ann: <strong>{urlAnn || urlStart?.replace('T', ' ')}</strong>
+              </span>
+              <span className={rStyles.bannerSep}>→</span>
+              <span className={rStyles.bannerItem}>
+                🚀 Listing: <strong>{urlListing || '—'}</strong>
+              </span>
+            </>
+          ) : (
+            <span className={rStyles.bannerItem}>
+              📢 Ann: <strong>{urlAnn || urlStart?.replace('T', ' ')}</strong>
+              <span className={rStyles.bannerSep} style={{ margin: '0 6px' }}>→</span>
+              🚀 Listing: <strong>{urlListing || '—'}</strong>
+            </span>
+          )}
           {(suggestedSpotBin || suggestedFutBin || suggestedBybit) && (
             <>
               <span className={rStyles.bannerSep}>·</span>
               {suggestedSpotBin && (
                 <button className={`${rStyles.autoFetchBtn} ${rStyles.fetchBinSpot}`}
-                  onClick={() => fetchURL(suggestedSpotBin)}>
+                  onClick={() => fetchURL(suggestedSpotBin, isBlind && !revealed)}>
                   ⬇ Spot Bin
                 </button>
               )}
               {suggestedFutBin && (
                 <button className={`${rStyles.autoFetchBtn} ${rStyles.fetchBinFut}`}
-                  onClick={() => fetchURL(suggestedFutBin)}>
+                  onClick={() => fetchURL(suggestedFutBin, isBlind && !revealed)}>
                   ⬇ Futures Bin
                 </button>
               )}
               {suggestedBybit && (
                 <button className={`${rStyles.autoFetchBtn} ${rStyles.fetchBybit}`}
-                  onClick={() => fetchURL(suggestedBybit)}>
+                  onClick={() => fetchURL(suggestedBybit, isBlind && !revealed)}>
                   ⬇ Bybit
                 </button>
               )}
@@ -223,17 +289,27 @@ function ReplayInner() {
           onSetDecimals={handleSetDecimals}
           onStartReplay={handleStartReplay}
           annDate={annDate}
-          annSymbol={annSymFull}
+          annSymbol={showInfo ? annSymFull : ''}
+          blind={isBlind && !revealed}
         />
 
         {/* ── CHART WRAP ── */}
         <div className={styles.chartWrap}>
           <div className={styles.chartHeader}>
-            <span className={styles.chSymbol}>{tradeFile?.symbol ?? (urlSymbol || '—')}</span>
+            <span className={styles.chSymbol}>{showInfo ? (tradeFile?.symbol ?? (urlSymbol || '—')) : '———'}</span>
             <span className={styles.chInterval}>{tradeFile ? fmtInterval(intervalMs) : ''}</span>
             <div className={styles.chOhlcv} ref={ohlcvRef}>
               {!tradeFile && <span style={{ color: 'var(--muted)', fontSize: 12 }}>Load dữ liệu để bắt đầu</span>}
             </div>
+            {tradeFile && (
+              <div className={styles.chMcFdv}>
+                <span className={styles.chMcLabel}>MC</span>
+                <span ref={mcRef} className={styles.chMcVal}>—</span>
+                <span className={styles.chMcSep}>/</span>
+                <span className={styles.chMcLabel}>FDV</span>
+                <span ref={fdvRef} className={styles.chMcVal}>—</span>
+              </div>
+            )}
           </div>
           <div className={styles.chartArea}>
             <ChartPanel ref={chartRef} />

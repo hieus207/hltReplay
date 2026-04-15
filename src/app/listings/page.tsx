@@ -109,6 +109,7 @@ export default function ListingsPage() {
           onChange={e => setSearch(e.target.value)}
         />
         <span className={styles.count}>{filtered.length} listings</span>
+        <Link href="/random" className={styles.randomBtn}>🎲 Random Replay</Link>
       </div>
 
       <div className={styles.tableWrap}>

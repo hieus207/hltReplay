@@ -4,7 +4,7 @@ import { useState, useRef, useCallback } from 'react';
 import type { Trade, CandleData, VolumeData, ReplayStatus, OrderPanelHandle } from '@/types';
 export type { OrderPanelHandle } from '@/types';
 import { lowerBound, upperBound } from '@/lib/bsearch';
-import { fmtUTC7 } from '@/lib/format';
+import { fmtUTC7, fmtMCap } from '@/lib/format';
 
 export interface ChartMarker {
   timeMs: number;  // UTC ms
@@ -48,6 +48,11 @@ export function useReplay(
     orderPanel?: React.RefObject<OrderPanelHandle | null>;
     entryPriceEl?: React.RefObject<HTMLSpanElement | null>;
     decimals?: React.RefObject<number>;
+    // MC/FDV live display
+    mcDisplay?: React.RefObject<HTMLSpanElement | null>;
+    fdvDisplay?: React.RefObject<HTMLSpanElement | null>;
+    circSupply?: React.RefObject<number>;
+    totalSupply?: React.RefObject<number>;
   },
   showToast: (msg: string, type: 'ok' | 'err' | 'info') => void,
 ) {
@@ -172,6 +177,13 @@ export function useReplay(
     }
     if (lastPrice > 0 && domRefs.entryPriceEl?.current) {
       domRefs.entryPriceEl.current.textContent = lastPrice.toFixed(domRefs.decimals?.current ?? 5);
+    }
+    // Update MC/FDV live
+    if (lastPrice > 0) {
+      const circ  = domRefs.circSupply?.current  ?? 0;
+      const total = domRefs.totalSupply?.current ?? 0;
+      if (circ  > 0 && domRefs.mcDisplay?.current)  domRefs.mcDisplay.current.textContent  = fmtMCap(lastPrice * circ);
+      if (total > 0 && domRefs.fdvDisplay?.current) domRefs.fdvDisplay.current.textContent = fmtMCap(lastPrice * total);
     }
 
     // Push to chart in time order

@@ -13,6 +13,33 @@
   border-color: var(--muted);
 }
 
+/* ── Blind mode ── */
+.blindBadge {
+  display: inline-flex;
+  align-items: center;
+  padding: 2px 8px;
+  font-size: 11px;
+  font-weight: 700;
+  background: rgba(239,83,80,0.15);
+  color: #ef5350;
+  border-radius: 4px;
+  letter-spacing: 0.3px;
+}
+
+.revealBtn {
+  padding: 4px 12px;
+  font-size: 12px;
+  font-weight: 700;
+  background: rgba(38,166,154,0.2);
+  color: #26a69a;
+  border: 1px solid #26a69a;
+  border-radius: 4px;
+  cursor: pointer;
+  transition: background 0.15s;
+  white-space: nowrap;
+}
+.revealBtn:hover { background: rgba(38,166,154,0.35); }
+
 .listingBadge {
   display: flex;
   align-items: center;

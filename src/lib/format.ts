@@ -38,6 +38,15 @@ export function todayStr(): string {
   return new Date().toISOString().slice(0, 10);
 }
 
+/** Format market cap / FDV value into readable string: $1.23B, $456M, $12.3K */
+export function fmtMCap(n: number): string {
+  if (!n || n <= 0) return '—';
+  if (n >= 1e9) return '$' + (n / 1e9).toFixed(2) + 'B';
+  if (n >= 1e6) return '$' + (n / 1e6).toFixed(2) + 'M';
+  if (n >= 1e3) return '$' + (n / 1e3).toFixed(1) + 'K';
+  return '$' + n.toFixed(0);
+}
+
 /**
  * Auto-detect sensible decimal places from a sample price.
  * e.g. 0.000015 → 8, 0.02597 → 6, 1.234 → 4, 50000 → 2

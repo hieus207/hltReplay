@@ -101,6 +101,21 @@
   margin-left: auto;
 }
 
+.randomBtn {
+  padding: 5px 14px;
+  font-size: 12px;
+  font-weight: 700;
+  background: var(--accent);
+  color: #000;
+  border: none;
+  border-radius: 4px;
+  text-decoration: none;
+  cursor: pointer;
+  transition: opacity 0.15s;
+  white-space: nowrap;
+}
+.randomBtn:hover { opacity: 0.85; }
+
 .tableWrap {
   flex: 1;
   overflow: auto;

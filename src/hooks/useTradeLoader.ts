@@ -95,9 +95,9 @@ export function useTradeLoader() {
   );
 
   const fetchURL = useCallback(
-    async (url: string) => {
+    async (url: string, hideSub?: boolean) => {
       if (!url) { showToast('Nhập URL trước!', 'err'); return; }
-      setLoading({ show: true, text: 'Đang tải từ URL...', sub: url.slice(-60) });
+      setLoading({ show: true, text: 'Đang tải từ URL...', sub: hideSub ? '' : url.slice(-60) });
       try {
         // Bybit has no CORS headers — route through server-side proxy.
         // Binance data.binance.vision has CORS(*), fetch directly.

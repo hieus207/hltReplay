@@ -1,0 +1,200 @@
+.page {
+  min-height: 100vh;
+  background: var(--bg);
+  color: var(--text);
+  display: flex;
+  flex-direction: column;
+}
+
+.header {
+  height: 48px;
+  background: var(--panel);
+  border-bottom: 1px solid var(--border);
+  display: flex;
+  align-items: center;
+  padding: 0 20px;
+  gap: 12px;
+  flex-shrink: 0;
+}
+
+.logo {
+  font-size: 15px;
+  font-weight: 700;
+  color: var(--accent);
+}
+
+.backBtn {
+  margin-left: auto;
+  font-size: 12px;
+  color: var(--muted);
+  text-decoration: none;
+  padding: 4px 10px;
+  border: 1px solid var(--border2);
+  border-radius: 4px;
+  transition: color 0.15s, border-color 0.15s;
+}
+.backBtn:hover { color: var(--text); border-color: var(--muted); }
+
+.body {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 20px;
+  padding: 32px 20px;
+}
+
+.card {
+  width: 100%;
+  max-width: 560px;
+  background: var(--panel);
+  border: 1px solid var(--border);
+  border-radius: 8px;
+  padding: 20px;
+}
+
+.cardTitle {
+  font-size: 12px;
+  font-weight: 600;
+  color: var(--muted);
+  text-transform: uppercase;
+  letter-spacing: 0.6px;
+  margin-bottom: 14px;
+}
+
+.row {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  margin-bottom: 12px;
+}
+
+.lbl {
+  font-size: 12px;
+  color: var(--muted);
+  min-width: 70px;
+  flex-shrink: 0;
+}
+
+.btnGroup {
+  display: flex;
+  gap: 4px;
+  flex-wrap: wrap;
+}
+
+.optBtn {
+  padding: 4px 12px;
+  font-size: 12px;
+  background: transparent;
+  border: 1px solid var(--border2);
+  border-radius: 4px;
+  color: var(--muted);
+  cursor: pointer;
+  transition: all 0.12s;
+}
+.optBtn:hover { color: var(--text); border-color: var(--muted); }
+.optActive {
+  background: var(--accent);
+  border-color: var(--accent);
+  color: #000;
+  font-weight: 600;
+}
+
+.poolInfo {
+  font-size: 11px;
+  color: var(--muted);
+  margin-top: 4px;
+}
+.noPool { color: #ef5350; }
+
+/* ── Slot display ── */
+.slot {
+  min-height: 90px;
+  border: 1px solid var(--border2);
+  border-radius: 8px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 12px;
+  margin-bottom: 16px;
+  background: var(--bg);
+  transition: background 0.1s;
+}
+
+.slotRolling {
+  background: rgba(240, 185, 11, 0.05);
+  border-color: var(--accent);
+}
+
+.slotPlaceholder {
+  font-size: 48px;
+  color: var(--border2);
+  font-weight: 700;
+}
+
+.slotSymbol {
+  font-size: 32px;
+  font-weight: 800;
+  font-family: monospace;
+  color: var(--text);
+  letter-spacing: 1px;
+}
+
+.slotDate {
+  font-size: 12px;
+  color: var(--muted);
+  font-family: monospace;
+}
+
+.exBadge {
+  display: inline-block;
+  padding: 3px 8px;
+  border-radius: 3px;
+  font-size: 11px;
+  font-weight: 700;
+}
+.upbit   { background: rgba(56,139,253,0.2);  color: #58a6ff; }
+.bithumb { background: rgba(240,185,11,0.2);  color: var(--accent); }
+
+/* ── Action buttons ── */
+.actions {
+  display: flex;
+  gap: 10px;
+}
+
+.rollBtn {
+  flex: 1;
+  padding: 10px;
+  font-size: 15px;
+  font-weight: 700;
+  background: var(--accent);
+  color: #000;
+  border: none;
+  border-radius: 6px;
+  cursor: pointer;
+  transition: opacity 0.15s;
+}
+.rollBtn:disabled { opacity: 0.4; cursor: not-allowed; }
+.rollBtn:not(:disabled):hover { opacity: 0.85; }
+
+.goBtn {
+  flex: 1;
+  padding: 10px;
+  font-size: 14px;
+  font-weight: 700;
+  background: #26a69a;
+  color: #fff;
+  border: none;
+  border-radius: 6px;
+  cursor: pointer;
+  transition: opacity 0.15s;
+}
+.goBtn:disabled { opacity: 0.3; cursor: not-allowed; }
+.goBtn:not(:disabled):hover { opacity: 0.85; }
+
+.hint {
+  margin-top: 10px;
+  font-size: 11px;
+  color: var(--muted);
+  text-align: center;
+}
+.hint b { color: var(--text); }
