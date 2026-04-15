@@ -1,0 +1,148 @@
+.sidebar {
+  width: 268px;
+  min-width: 268px;
+  background: var(--panel);
+  border-right: 1px solid var(--border);
+  display: flex;
+  flex-direction: column;
+  overflow-y: auto;
+  padding: 12px;
+  gap: 16px;
+  flex-shrink: 0;
+}
+
+.sLabel {
+  font-size: 10px;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  color: var(--muted);
+  margin-bottom: 6px;
+}
+
+.dropZone {
+  border: 1.5px dashed var(--border2);
+  border-radius: 8px;
+  padding: 18px 10px;
+  text-align: center;
+  cursor: pointer;
+  transition: all 0.2s;
+  user-select: none;
+}
+.dropZone:hover,
+.over {
+  border-color: var(--accent);
+  background: rgba(240, 185, 11, 0.04);
+}
+.dzIcon { font-size: 22px; margin-bottom: 5px; }
+.dzText { font-size: 11px; color: var(--muted); line-height: 1.5; }
+.dzText b { color: var(--text); }
+
+.loadedBadge {
+  background: var(--bg);
+  border: 1px solid var(--border2);
+  border-radius: 5px;
+  padding: 7px 9px;
+  font-size: 11px;
+  margin-top: 7px;
+}
+.lbName { font-weight: 600; color: var(--text); white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+.lbMeta { color: var(--muted); margin-top: 2px; }
+
+.orDivider {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  color: var(--muted);
+  font-size: 10px;
+  margin: 10px 0;
+}
+.orDivider::before,
+.orDivider::after {
+  content: '';
+  flex: 1;
+  height: 1px;
+  background: var(--border);
+}
+
+.row { display: flex; gap: 5px; }
+
+.inp {
+  flex: 1;
+  background: var(--bg);
+  border: 1px solid var(--border2);
+  border-radius: 5px;
+  color: var(--text);
+  padding: 6px 9px;
+  font-size: 12px;
+  outline: none;
+  transition: border-color 0.2s;
+  font-family: inherit;
+}
+.inp:focus { border-color: var(--accent); }
+
+.typeSelect { max-width: 90px; cursor: pointer; }
+
+.btn {
+  background: var(--accent);
+  color: #000;
+  border: none;
+  border-radius: 5px;
+  padding: 6px 11px;
+  font-size: 12px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: opacity 0.2s;
+  white-space: nowrap;
+  font-family: inherit;
+}
+.btn:hover { opacity: 0.85; }
+.btn:disabled { opacity: 0.35; cursor: not-allowed; }
+.btnBlock { width: 100%; margin-top: 10px; }
+.btnSmall { padding: 2px 7px; font-size: 11px; }
+.btnGhost { background: transparent; color: var(--muted); border: 1px solid var(--border2); }
+.btnGhost:hover { background: rgba(255,255,255,0.04); opacity: 1; color: var(--text); border-color: var(--accent); }
+.btnActive { background: rgba(240,185,11,0.15); color: var(--accent); border: 1px solid var(--accent); opacity: 1; }
+
+.hint { font-size: 10px; color: var(--muted); line-height: 1.5; margin-top: 5px; }
+.hint b { color: var(--text); }
+
+.urlGen {
+  background: var(--bg);
+  border: 1px solid var(--border2);
+  border-radius: 5px;
+  padding: 8px 9px;
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+.urlGenTitle {
+  font-size: 10px;
+  color: var(--muted);
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+}
+.urlResult {
+  word-break: break-all;
+  color: var(--blue);
+  font-size: 10px;
+  cursor: pointer;
+}
+.urlResult:hover { text-decoration: underline; }
+
+.formRow {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  margin-top: 6px;
+}
+.formRow label { font-size: 11px; color: var(--muted); }
+
+.stats {
+  font-size: 11px;
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  color: var(--muted);
+}
+.stats span { color: var(--text); }
+.accent { color: var(--accent) !important; }

@@ -1,0 +1,387 @@
+[
+  {
+    "exchange": "upbit",
+    "symbol": "ZAMA",
+    "ann_time": "2026-04-14 14:48:41",
+    "listing_time": "2026-04-14 17:00:00",
+    "source_url": "https://upbit.com/service_center/notice?id=6146"
+  },
+  {
+    "exchange": "bithumb",
+    "symbol": "ZAMA",
+    "ann_time": "2026-04-14 12:39:12",
+    "listing_time": "2026-04-14 15:00:00",
+    "source_url": "https://feed.bithumb.com/notice/1652631"
+  },
+  {
+    "exchange": "upbit",
+    "symbol": "CC",
+    "ann_time": "2026-04-14 12:00:01",
+    "listing_time": "2026-04-14 13:00:00",
+    "source_url": "https://upbit.com/service_center/notice?id=6144"
+  },
+  {
+    "exchange": "bithumb",
+    "symbol": "VVV",
+    "ann_time": "2026-04-01 10:21:26",
+    "listing_time": "2026-04-01 13:00:00",
+    "source_url": "https://feed.bithumb.com/notice/1652525"
+  },
+  {
+    "exchange": "upbit",
+    "symbol": "SKY",
+    "ann_time": "2026-03-31 09:30:02",
+    "listing_time": "2026-03-31 10:00:00",
+    "source_url": "https://upbit.com/service_center/notice?id=6102"
+  },
+  {
+    "exchange": "bithumb",
+    "symbol": "KAT",
+    "ann_time": "2026-03-26 15:31:30",
+    "listing_time": "2026-03-26 17:00:00",
+    "source_url": "https://feed.bithumb.com/notice/1652436"
+  },
+  {
+    "exchange": "upbit",
+    "symbol": "KAT",
+    "ann_time": "2026-03-26 15:07:51",
+    "listing_time": "2026-03-26 17:00:00",
+    "source_url": "https://upbit.com/service_center/notice?id=6097"
+  },
+  {
+    "exchange": "bithumb",
+    "symbol": "PHA",
+    "ann_time": "2026-03-20 09:28:28",
+    "listing_time": "2026-03-20 13:00:00",
+    "source_url": "https://feed.bithumb.com/notice/1652367"
+  },
+  {
+    "exchange": "upbit",
+    "symbol": "ETHFI",
+    "ann_time": "2026-03-19 09:50:01",
+    "listing_time": "2026-03-19 10:00:00",
+    "source_url": "https://upbit.com/service_center/notice?id=6079"
+  },
+  {
+    "exchange": "bithumb",
+    "symbol": "ROBO",
+    "ann_time": "2026-03-18 10:09:17",
+    "listing_time": "2026-03-18 12:00:00",
+    "source_url": "https://feed.bithumb.com/notice/1652339"
+  },
+  {
+    "exchange": "bithumb",
+    "symbol": "CYS",
+    "ann_time": "2026-03-12 12:22:28",
+    "listing_time": "2026-03-12 15:00:00",
+    "source_url": "https://feed.bithumb.com/notice/1652265"
+  },
+  {
+    "exchange": "upbit",
+    "symbol": "ICP",
+    "ann_time": "2026-03-11 13:00:02",
+    "listing_time": "2026-03-11 15:00:00",
+    "source_url": "https://upbit.com/service_center/notice?id=6069"
+  },
+  {
+    "exchange": "bithumb",
+    "symbol": "EDGE",
+    "ann_time": "2026-03-04 12:59:13",
+    "listing_time": "2026-03-04 15:00:00",
+    "source_url": "https://feed.bithumb.com/notice/1652177"
+  },
+  {
+    "exchange": "upbit",
+    "symbol": "EDGE",
+    "ann_time": "2026-03-04 12:50:01",
+    "listing_time": "2026-03-04 15:00:00",
+    "source_url": "https://upbit.com/service_center/notice?id=6057"
+  },
+  {
+    "exchange": "bithumb",
+    "symbol": "GWEI",
+    "ann_time": "2026-02-26 10:29:04",
+    "listing_time": "2026-02-26 12:00:00",
+    "source_url": "https://feed.bithumb.com/notice/1652113"
+  },
+  {
+    "exchange": "upbit",
+    "symbol": "CFG",
+    "ann_time": "2026-02-26 10:00:01",
+    "listing_time": "2026-02-26 12:00:00",
+    "source_url": "https://upbit.com/service_center/notice?id=6043"
+  },
+  {
+    "exchange": "bithumb",
+    "symbol": "GPS",
+    "ann_time": "2026-02-24 13:45:36",
+    "listing_time": "2026-02-24 17:00:00",
+    "source_url": "https://feed.bithumb.com/notice/1652084"
+  },
+  {
+    "exchange": "upbit",
+    "symbol": "ESP",
+    "ann_time": "2026-02-24 13:04:05",
+    "listing_time": "2026-02-24 15:00:00",
+    "source_url": "https://upbit.com/service_center/notice?id=6038"
+  },
+  {
+    "exchange": "bithumb",
+    "symbol": "ESP",
+    "ann_time": "2026-02-24 12:45:47",
+    "listing_time": "2026-02-24 15:00:00",
+    "source_url": "https://feed.bithumb.com/notice/1652082"
+  },
+  {
+    "exchange": "upbit",
+    "symbol": "SKR",
+    "ann_time": "2026-02-24 12:00:01",
+    "listing_time": "2026-02-24 14:00:00",
+    "source_url": "https://upbit.com/service_center/notice?id=6037"
+  },
+  {
+    "exchange": "bithumb",
+    "symbol": "AZTEC",
+    "ann_time": "2026-02-20 12:16:54",
+    "listing_time": "2026-02-20 14:30:00",
+    "source_url": "https://feed.bithumb.com/notice/1652023"
+  },
+  {
+    "exchange": "upbit",
+    "symbol": "AZTEC",
+    "ann_time": "2026-02-20 12:00:01",
+    "listing_time": "2026-02-20 14:00:00",
+    "source_url": "https://upbit.com/service_center/notice?id=6025"
+  },
+  {
+    "exchange": "bithumb",
+    "symbol": "LIT",
+    "ann_time": "2026-02-16 14:18:20",
+    "listing_time": "2026-02-16 17:00:00",
+    "source_url": "https://feed.bithumb.com/notice/1652015"
+  },
+  {
+    "exchange": "upbit",
+    "symbol": "TAO",
+    "ann_time": "2026-02-16 12:00:01",
+    "listing_time": "2026-02-16 14:00:00",
+    "source_url": "https://upbit.com/service_center/notice?id=6021"
+  },
+  {
+    "exchange": "upbit",
+    "symbol": "BIRB",
+    "ann_time": "2026-02-03 14:00:01",
+    "listing_time": "2026-02-03 16:00:00",
+    "source_url": "https://upbit.com/service_center/notice?id=5990"
+  },
+  {
+    "exchange": "upbit",
+    "symbol": "SENT",
+    "ann_time": "2026-01-29 13:15:09",
+    "listing_time": "2026-01-29 15:00:00",
+    "source_url": "https://upbit.com/service_center/notice?id=5973"
+  },
+  {
+    "exchange": "bithumb",
+    "symbol": "ELSA",
+    "ann_time": "2026-01-29 12:52:42",
+    "listing_time": "2026-01-29 16:00:00",
+    "source_url": "https://feed.bithumb.com/notice/1651725"
+  },
+  {
+    "exchange": "upbit",
+    "symbol": "ELSA",
+    "ann_time": "2026-01-22 12:30:01",
+    "listing_time": "2026-01-22 14:00:00",
+    "source_url": "https://upbit.com/service_center/notice?id=5953"
+  },
+  {
+    "exchange": "bithumb",
+    "symbol": "SKR",
+    "ann_time": "2026-01-22 10:16:17",
+    "listing_time": "2026-01-22 14:30:00",
+    "source_url": "https://feed.bithumb.com/notice/1651624"
+  },
+  {
+    "exchange": "bithumb",
+    "symbol": "USDE",
+    "ann_time": "2026-01-14 14:13:43",
+    "listing_time": "2026-01-14 16:00:00",
+    "source_url": "https://feed.bithumb.com/notice/1651484"
+  },
+  {
+    "exchange": "upbit",
+    "symbol": "USDE",
+    "ann_time": "2026-01-14 13:55:48",
+    "listing_time": "2026-01-14 16:00:00",
+    "source_url": "https://upbit.com/service_center/notice?id=5934"
+  },
+  {
+    "exchange": "upbit",
+    "symbol": "BREV",
+    "ann_time": "2026-01-07 09:20:02",
+    "listing_time": "2026-01-07 13:00:00",
+    "source_url": "https://upbit.com/service_center/notice?id=5914"
+  },
+  {
+    "exchange": "bithumb",
+    "symbol": "BREV",
+    "ann_time": "2026-01-07 08:49:07",
+    "listing_time": "2026-01-07 13:00:00",
+    "source_url": "https://feed.bithumb.com/notice/1651447"
+  },
+  {
+    "exchange": "upbit",
+    "symbol": "ZK",
+    "ann_time": "2026-01-06 14:30:16",
+    "listing_time": "2026-01-06 16:00:00",
+    "source_url": "https://upbit.com/service_center/notice?id=5913"
+  },
+  {
+    "exchange": "bithumb",
+    "symbol": "XAUT",
+    "ann_time": "2026-01-01 12:36:51",
+    "listing_time": "2026-01-01 14:00:00",
+    "source_url": "https://feed.bithumb.com/notice/1651437"
+  },
+  {
+    "exchange": "upbit",
+    "symbol": "XAUT",
+    "ann_time": "2026-01-01 11:00:01",
+    "listing_time": "2026-01-01 13:00:00",
+    "source_url": "https://upbit.com/service_center/notice?id=5900"
+  },
+  {
+    "exchange": "upbit",
+    "symbol": "ZKP",
+    "ann_time": "2025-12-26 13:19:44",
+    "listing_time": "2025-12-26 15:00:00",
+    "source_url": "https://upbit.com/service_center/notice?id=5885"
+  },
+  {
+    "exchange": "bithumb",
+    "symbol": "ZKP",
+    "ann_time": "2025-12-26 12:46:00",
+    "listing_time": "2025-12-26 15:30:00",
+    "source_url": "https://feed.bithumb.com/notice/1651336"
+  },
+  {
+    "exchange": "upbit",
+    "symbol": "YB",
+    "ann_time": "2025-12-26 11:15:01",
+    "listing_time": "2025-12-26 13:00:00",
+    "source_url": "https://upbit.com/service_center/notice?id=5884"
+  },
+  {
+    "exchange": "bithumb",
+    "symbol": "THQ",
+    "ann_time": "2025-12-23 09:57:50",
+    "listing_time": "2025-12-23 15:00:00",
+    "source_url": "https://feed.bithumb.com/notice/1651257"
+  },
+  {
+    "exchange": "bithumb",
+    "symbol": "DEXE",
+    "ann_time": "2025-12-19 08:51:04",
+    "listing_time": "2025-12-19 14:00:00",
+    "source_url": "https://feed.bithumb.com/notice/1651223"
+  },
+  {
+    "exchange": "bithumb",
+    "symbol": "EDEN",
+    "ann_time": "2025-12-16 12:20:06",
+    "listing_time": "2025-12-16 15:30:00",
+    "source_url": "https://feed.bithumb.com/notice/1651196"
+  },
+  {
+    "exchange": "bithumb",
+    "symbol": "WET",
+    "ann_time": "2025-12-15 14:12:56",
+    "listing_time": "2025-12-15 16:30:00",
+    "source_url": "https://feed.bithumb.com/notice/1651171"
+  },
+  {
+    "exchange": "upbit",
+    "symbol": "WET",
+    "ann_time": "2025-12-15 14:00:02",
+    "listing_time": "2025-12-15 16:00:00",
+    "source_url": "https://upbit.com/service_center/notice?id=5860"
+  },
+  {
+    "exchange": "bithumb",
+    "symbol": "STABLE",
+    "ann_time": "2025-12-11 10:17:02",
+    "listing_time": "2025-12-11 15:00:00",
+    "source_url": "https://feed.bithumb.com/notice/1651109"
+  },
+  {
+    "exchange": "bithumb",
+    "symbol": "ALLO",
+    "ann_time": "2025-12-09 09:18:09",
+    "listing_time": "2025-12-09 15:00:00",
+    "source_url": "https://feed.bithumb.com/notice/1651063"
+  },
+  {
+    "exchange": "bithumb",
+    "symbol": "SAPIEN",
+    "ann_time": "2025-12-05 09:12:03",
+    "listing_time": "2025-12-05 15:00:00",
+    "source_url": "https://feed.bithumb.com/notice/1651017"
+  },
+  {
+    "exchange": "bithumb",
+    "symbol": "BOB",
+    "ann_time": "2025-12-03 09:33:09",
+    "listing_time": "2025-12-03 15:00:00",
+    "source_url": "https://feed.bithumb.com/notice/1650991"
+  },
+  {
+    "exchange": "upbit",
+    "symbol": "PLUME",
+    "ann_time": "2025-11-26 12:30:04",
+    "listing_time": "2025-11-26 13:00:00",
+    "source_url": "https://upbit.com/service_center/notice?id=5796"
+  },
+  {
+    "exchange": "bithumb",
+    "symbol": "XION",
+    "ann_time": "2025-11-26 09:32:23",
+    "listing_time": "2025-11-26 14:00:00",
+    "source_url": "https://feed.bithumb.com/notice/1650858"
+  },
+  {
+    "exchange": "bithumb",
+    "symbol": "MON",
+    "ann_time": "2025-11-24 16:19:09",
+    "listing_time": "2025-11-24 22:00:00",
+    "source_url": "https://feed.bithumb.com/notice/1650813"
+  },
+  {
+    "exchange": "upbit",
+    "symbol": "MON",
+    "ann_time": "2025-11-24 16:01:34",
+    "listing_time": "2025-11-24 22:00:00",
+    "source_url": "https://upbit.com/service_center/notice?id=5790"
+  },
+  {
+    "exchange": "bithumb",
+    "symbol": "PIEVERSE",
+    "ann_time": "2025-11-24 13:26:54",
+    "listing_time": "2025-11-24 15:00:00",
+    "source_url": "https://feed.bithumb.com/notice/1650807"
+  },
+  {
+    "exchange": "bithumb",
+    "symbol": "MET",
+    "ann_time": "2025-11-18 13:40:08",
+    "listing_time": "2025-11-18 15:00:00",
+    "source_url": "https://feed.bithumb.com/notice/1650750"
+  },
+  {
+    "exchange": "upbit",
+    "symbol": "MET2",
+    "ann_time": "2025-11-18 13:20:01",
+    "listing_time": "2025-11-18 15:00:00",
+    "source_url": "https://upbit.com/service_center/notice?id=5769"
+  }
+]

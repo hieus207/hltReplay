@@ -1,0 +1,76 @@
+.backBtn {
+  font-size: 12px;
+  color: var(--muted);
+  text-decoration: none;
+  padding: 4px 10px;
+  border: 1px solid var(--border2);
+  border-radius: 4px;
+  transition: color 0.15s, border-color 0.15s;
+  flex-shrink: 0;
+}
+.backBtn:hover {
+  color: var(--text);
+  border-color: var(--muted);
+}
+
+.listingBadge {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  margin-left: 8px;
+}
+
+.exBadge {
+  display: inline-block;
+  padding: 2px 6px;
+  border-radius: 3px;
+  font-size: 11px;
+  font-weight: 700;
+}
+.upbit   { background: rgba(56,139,253,0.2); color: #58a6ff; }
+.bithumb { background: rgba(240,185,11,0.2); color: var(--accent); }
+
+.listingSymbol {
+  font-size: 13px;
+  font-weight: 700;
+  font-family: monospace;
+  color: var(--text);
+}
+
+/* ── Info banner ── */
+.banner {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 7px 16px;
+  background: rgba(56,139,253,0.07);
+  border-bottom: 1px solid rgba(56,139,253,0.2);
+  font-size: 12px;
+  flex-shrink: 0;
+}
+
+.bannerItem {
+  color: var(--muted);
+}
+.bannerItem strong {
+  color: var(--text);
+  font-family: monospace;
+}
+
+.bannerSep {
+  color: var(--border2);
+}
+
+.autoFetchBtn {
+  margin-left: 4px;
+  padding: 4px 12px;
+  background: var(--accent);
+  color: #000;
+  font-size: 12px;
+  font-weight: 700;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+  transition: opacity 0.15s;
+}
+.autoFetchBtn:hover { opacity: 0.85; }
