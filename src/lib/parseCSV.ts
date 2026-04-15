@@ -37,10 +37,14 @@ export async function parseCSVToTrades(
           const pr = Number(cols[4].trim());
           const qt = Number(cols[3].trim());
           const side = cols[2].trim(); // "Buy" or "Sell"
-          // Bybit timestamps are microseconds (16-digit, ~1.7e15) → divide by 1000 for ms
-          // Nanoseconds would be 19-digit (~1.7e18)
-          if (t > 1e17) t = Math.round(t / 1_000_000);  // nanoseconds (19-digit)
-          else if (t > 1e14) t = Math.round(t / 1000);  // microseconds (16-digit)
+          // Normalize Bybit timestamps to milliseconds:
+          // 19-digit (~1.7e18): nanoseconds  → ÷1e6
+          // 16-digit (~1.7e15): microseconds → ÷1e3
+          // 13-digit (~1.7e12): milliseconds → no change
+          // 10-digit (~1.7e9):  seconds      → ×1e3
+          if      (t > 1e17) t = Math.round(t / 1_000_000); // nanoseconds
+          else if (t > 1e14) t = Math.round(t / 1_000);     // microseconds
+          else if (t < 1e12) t = Math.round(t * 1_000);     // seconds
           if (t > 0 && pr > 0) result.push({
             time: t, price: pr, qty: qt,
             // In Binance convention: isBuyerMaker=true means sell trade
