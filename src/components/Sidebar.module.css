@@ -117,6 +117,10 @@
   flex-direction: column;
   gap: 6px;
 }
+.urlGenBybit {
+  margin-top: 8px;
+  border-color: #3a4a6b;
+}
 .urlGenTitle {
   font-size: 10px;
   color: var(--muted);

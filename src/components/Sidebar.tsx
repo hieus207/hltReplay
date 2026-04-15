@@ -44,9 +44,19 @@ export default function Sidebar({
   const [genURL, setGenURL]       = useState('');
   const [copied, setCopied]       = useState(false);
 
+  const [bbSymbol, setBbSymbol]   = useState('');
+  const [bbDate, setBbDate]       = useState(todayStr());
+  const [bbURL, setBbURL]         = useState('');
+  const [bbCopied, setBbCopied]   = useState(false);
+
   const buildURL = useCallback((sym: string, date: string, type: MarketType) => {
     if (!sym || !date) return '';
     return `https://data.binance.vision/data/${type}/daily/aggTrades/${sym}/${sym}-aggTrades-${date}.zip`;
+  }, []);
+
+  const buildBybitURL = useCallback((sym: string, date: string) => {
+    if (!sym || !date) return '';
+    return `https://public.bybit.com/trading/${sym}/${sym}${date}.csv.gz`;
   }, []);
 
   const handleGenSymbol = (v: string) => {
@@ -74,6 +84,28 @@ export default function Sidebar({
     navigator.clipboard.writeText(genURL).then(() => {
       setCopied(true);
       setTimeout(() => setCopied(false), 2500);
+    });
+  };
+
+  const handleBbSymbol = (v: string) => {
+    const s = v.toUpperCase();
+    setBbSymbol(s);
+    const u = buildBybitURL(s, bbDate);
+    setBbURL(u);
+    if (u) setUrlInput(u);
+  };
+  const handleBbDate = (v: string) => {
+    setBbDate(v);
+    const u = buildBybitURL(bbSymbol, v);
+    setBbURL(u);
+    if (u) setUrlInput(u);
+  };
+
+  const copyBbURL = () => {
+    if (!bbURL) return;
+    navigator.clipboard.writeText(bbURL).then(() => {
+      setBbCopied(true);
+      setTimeout(() => setBbCopied(false), 2500);
     });
   };
 
@@ -165,6 +197,26 @@ export default function Sidebar({
             </div>
           )}
           {copied && <p className={styles.hint} style={{ color: 'var(--green2)' }}>✓ Đã copy!</p>}
+        </div>
+
+        <div className={`${styles.urlGen} ${styles.urlGenBybit}`}>
+          <div className={styles.urlGenTitle}>Tạo link Bybit Public Trades</div>
+          <input
+            className={styles.inp}
+            placeholder="BTCUSDT"
+            value={bbSymbol}
+            onChange={(e) => handleBbSymbol(e.target.value)}
+          />
+          <input
+            type="date" className={styles.inp}
+            value={bbDate} onChange={(e) => handleBbDate(e.target.value)}
+          />
+          {bbURL && (
+            <div className={styles.urlResult} onClick={copyBbURL} title="Click để copy">
+              {bbURL}
+            </div>
+          )}
+          {bbCopied && <p className={styles.hint} style={{ color: 'var(--green2)' }}>✓ Đã copy!</p>}
         </div>
       </section>
 
