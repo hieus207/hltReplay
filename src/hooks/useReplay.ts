@@ -203,13 +203,18 @@ export function useReplay(
     // Fire chart markers progressively as replay time crosses each marker timestamp
     while (s.markerIdx < s.markers.length && s.markers[s.markerIdx].timeMs <= s.vTime) {
       s.markerIdx++;
-      const fired = s.markers.slice(0, s.markerIdx).map(m => ({
-        // Snap to candle boundary so lightweight-charts can find the candle
-        timeMs: Math.floor(m.timeMs / s.intervalMs) * s.intervalMs,
-        label: m.label,
-        color: m.color,
-        position: m.position,
-      }));
+      // Only show markers that fall within the replay range — markers from a
+      // different date would otherwise snap to the first/last candle of the chart.
+      const fired = s.markers
+        .slice(0, s.markerIdx)
+        .filter(m => m.timeMs >= s.startMs && m.timeMs <= s.endMs)
+        .map(m => ({
+          // Snap to candle boundary so lightweight-charts can find the candle
+          timeMs: Math.floor(m.timeMs / s.intervalMs) * s.intervalMs,
+          label: m.label,
+          color: m.color,
+          position: m.position,
+        }));
       chartRef.current?.setMarkers(fired);
     }
 
